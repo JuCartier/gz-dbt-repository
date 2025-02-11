@@ -13,7 +13,7 @@ renamed as (
     shipping_fee,
     shipping_fee_1,
     logCost,
-    cast(ship_cost as FLOAT64),
+    cast(ship_cost as FLOAT64) as ship_cost,
     shipping_fee - shipping_fee_1 as diff
 
     from source
