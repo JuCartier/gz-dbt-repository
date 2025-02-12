@@ -1,9 +1,34 @@
+WITH sales_data AS (
+    SELECT
+        a.orders_id,
+        a.date_date,
+        a.quantity,
+        a.revenue,
+        b.purchase_price,
+        (b.purchase_price * a.quantity) AS purchase_cost
+    FROM {{ ref('stg_raw__sales') }} AS a
+    LEFT JOIN {{ ref('stg_raw__product') }} AS b
+    USING (products_id)
+)
 SELECT
     orders_id,
+    {{ margin_percent('revenue', 'purchase_cost') }} AS margin_percent,
     date_date,
-    revenue,
     quantity,
-    cast(round(quantity * purchase_price,2) as FLOAT64) as purchase_cost,
-    cast(round(revenue - quantity * purchase_price,2) as FLOAT64) as margin
-FROM {{ ref('stg_raw__sales') }} a
-JOIN {{ ref('stg_raw__product') }} b ON a.products_id = b.products_id
+    purchase_price,
+    revenue,
+    purchase_cost,
+    ROUND((revenue - purchase_cost), 2) AS margin
+FROM sales_data
+
+
+
+
+
+
+
+
+
+
+
+
