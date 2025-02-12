@@ -6,6 +6,38 @@ sources:
   - name: raw
     schema: gz_raw_data
     tables:
+      - name: adwords
+        identifier: raw_gz_adwords
+        columns:
+          - name: (date_date || '-' || campaign_key)
+            description: Primary Key
+            tests:
+              - not_null
+              - unique
+      - name: bing
+        identifier: raw_gz_bing
+        columns:
+          - name: (date_date || '-' || campaign_key)
+            description: Primary Key
+            tests:
+              - not_null
+              - unique
+      - name: criteo
+        identifier: raw_gz_criteo
+        columns:
+          - name: (date_date || '-' || campaign_key)
+            description: Primary Key
+            tests:
+              - not_null
+              - unique
+      - name: facebook
+        identifier: raw_gz_facebook
+        columns:
+          - name: (date_date || '-' || campaign_key)
+            description: Primary Key
+            tests:
+              - not_null
+              - unique
       - name: sales
         identifier: raw_gz_sales
         description: sales of Greenweez / we have on row per products_id found in each orders_id
@@ -57,3 +89,24 @@ sources:
             description: price of the ship
           - name: diff
             description: difference between shipping_fee and shipping_fee_1
+models:
+  - name: int_campaign_day
+    columns:
+      - name: date_date
+        description: Unique date
+        tests:
+          - unique
+          - not_null
+      - name: ads_cost
+        description: Sum of ads cost
+      - name: ads_impression
+        description: Total amount of impressions
+      - name: ads_click
+        description: Total amount of clicks
+  - name: finance_campaign_days
+    columns:
+      - name: date_date
+        description: Unique date
+        tests:
+          - unique
+          - not_null
